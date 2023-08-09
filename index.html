@@ -1,0 +1,242 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+
+    <script src="js/TileLayer.BetterWMS.js"></script>
+
+</head>
+<body class="">
+    <!-- <img src="img/test.png" alt="" class="w-full h-full"> -->
+    <div class="relative z-30 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true" id="papua" >
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+      
+        <div class="fixed inset-0 z-10 overflow-y-auto px-4">
+          <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 w-full ">
+            
+            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition ease-out	duration-300 sm:my-8 w-full" style="height: 80vh;">
+                <div class="space-x-6 flex justify-end items-center ">
+
+                    <!-- nav -->
+                    <div class=" px-4 pb-4 pt-5 sm:p-6 sm:pb-4 w-full flex justify-center space-x-6 bg-white">
+                        <div @click.away="open = false" class="relative py-2" x-data="{ open: false }">
+                          <button @click="open = !open" class="flex flex-row items-center w-full ">
+                              <a  class="font-semibold text-xl">Hutan</a>
+                          <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 items-center mt-1 ml-1 transition-transform duration-200 transform text-black"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                          </button>
+                            <div x-show="open" style="display: none !important;" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right  shadow-lg md:w-48">
+                                <div class="  bg-white shadow ">
+                                    <a class="text-black block px-4 py-1 mt-2 text-sm font-semibold bg-transparent   md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Formasi Hutan</a>
+                                </div>
+                                <div class="  bg-white shadow ">
+                                    <a class="text-black block px-4 py-1 mt-2 text-sm font-semibold bg-transparent   md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Mangrove</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div @click.away="open = false" class="relative py-2" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex flex-row items-center w-full ">
+                                <a  class="font-semibold text-xl">Formasi Non Hutan</a>
+                            <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 items-center mt-1 ml-1 transition-transform duration-200 transform text-black"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </button>
+                              <div x-show="open" style="display: none !important;" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right  shadow-lg md:w-48">
+                                  <div class="  bg-white shadow ">
+                                      <a class="text-black block px-4 py-1 mt-2 text-sm font-semibold bg-transparent   md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Formasi Non Hutan Lainnya</a>
+                                  </div>
+                                  
+                              </div>
+                        </div>
+                        <div @click.away="open = false" class="relative py-2" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex flex-row items-center w-full ">
+                                <a  class="font-semibold text-xl">Pertanian</a>
+                            <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 items-center mt-1 ml-1 transition-transform duration-200 transform text-black"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </button>
+                              <div x-show="open" style="display: none !important;" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right  shadow-lg md:w-48">
+                                    <div class="  bg-white shadow ">
+                                        <a class="text-black block px-4 py-1 mt-2 text-sm font-semibold bg-transparent   md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Sawah Irigasi</a>
+                                    </div>
+                                    <div class="  bg-white shadow ">
+                                        <a class="text-black block px-4 py-1 mt-2 text-sm font-semibold bg-transparent   md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Sawit</a>
+                                    </div>
+                                    <div class="  bg-white shadow ">
+                                        <a class="text-black block px-4 py-1 mt-2 text-sm font-semibold bg-transparent   md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Perkebunan Kayu Pulp</a>
+                                    </div>
+                                    <div class="  bg-white shadow ">
+                                        <a class="text-black block px-4 py-1 mt-2 text-sm font-semibold bg-transparent   md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Pertanian Lainya</a>
+                                    </div>
+                              </div>
+                        </div>
+                        <div @click.away="open = false" class="relative py-2" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex flex-row items-center w-full ">
+                                <a  class="font-semibold text-xl">Non Vegetasi</a>
+                            <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 items-center mt-1 ml-1 transition-transform duration-200 transform text-black"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </button>
+                              <div x-show="open" style="display: none !important;" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right  shadow-lg md:w-48">
+                                    <div class="  bg-white shadow ">
+                                        <a class="text-black block px-4 py-1 mt-2 text-sm font-semibold bg-transparent   md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Tambang</a>
+                                    </div>
+                                    <div class="  bg-white shadow ">
+                                        <a class="text-black block px-4 py-1 mt-2 text-sm font-semibold bg-transparent   md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Non Vegetasi Lainya</a>
+                                    </div>
+                              </div>
+                        </div>
+                        <div @click.away="open = false" class="relative py-2" x-data="{ open: false }">
+                            <button @click="open = !open" class="flex flex-row items-center w-full ">
+                                <a  class="font-semibold text-xl">Tubuh Air</a>
+                            <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 items-center mt-1 ml-1 transition-transform duration-200 transform text-black"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </button>
+                              <div x-show="open" style="display: none !important;" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 w-full mt-2 origin-top-right  shadow-lg md:w-48">
+                                    <div class="  bg-white shadow ">
+                                        <a class="text-black block px-4 py-1 mt-2 text-sm font-semibold bg-transparent   md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Sungai / Danau</a>
+                                    </div>
+                                    <div class="  bg-white shadow ">
+                                        <a class="text-black block px-4 py-1 mt-2 text-sm font-semibold bg-transparent   md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" href="#">Tambak</a>
+                                    </div>
+                              </div>
+                        </div>
+                    </div>
+                    
+                    
+               
+              </div>
+              <!-- content -->
+                <div class="w-full h-full overflow-y-auto max-w-5xl mx-auto px-4"
+                x-data
+                x-init = "
+                GLightbox({
+                    touchNavigation: true,
+                });
+                ">
+                    <div class="flex justify-center">
+                        <h1 class="font-bold">Title</h1>
+                    </div>
+                    <div class="flex justify-between space-x-12 w-full">
+                        <div class="sm:w-6/12 w-full ">
+                            <div class="border-b border-black flex justify-center py-2">
+                                <h1 class="font-semibold">Title</h1>
+                            </div>
+                            <p class="mt-4">
+                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum dolore laborum autem facilis, id fuga quibusdam vero neque aliquid deleniti cupiditate unde omnis quos praesentium tempora aspernatur adipisci rerum deserunt.
+                            </p>
+                        </div>
+                        <div class="sm:w-6/12 w-full ">
+                            <div class="border-b border-black flex justify-center py-2">
+                                <h1 class="font-semibold">Title</h1>
+                            </div>
+                            <ul class="list-disc px-12 mt-4">
+                                <li>Karakteristik</li>
+                                <li>Karakteristik</li>
+                                <li>Karakteristik</li>
+                                <li>Karakteristik</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="flex justify-between w-full space-x-4 mt-6">
+                        <div class="relative w-4/12 ">
+                            <a href="img/img1.png" class="glightbox " loading="lazy">
+                                <div class="flex w-full h-full justify-center items-center z-40 absolute">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-white">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                </div> 
+                                <img src="img/img1.png" alt="image" loading="lazy" />
+                            </a>
+                        </div>
+                        <div class="relative w-4/12 ">
+                            <a href="img/img2.png" class="glightbox " loading="lazy">
+                                <div class="flex w-full h-full justify-center items-center z-40 absolute">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-white">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                </div> 
+                                <img src="img/img2.png" alt="image" loading="lazy" />
+                            </a>
+                        </div>
+                        <div class="relative w-4/12 ">
+                            <a href="img/img3.png" class="glightbox " loading="lazy">
+                                <div class="flex w-full h-full justify-center items-center z-40 absolute">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-white">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                </div> 
+                                <img src="img/img3.png" alt="image" loading="lazy" />
+                            </a>
+                        </div>
+                       
+                        
+                    </div>
+                </div>
+                <div class="absolute bottom-0 bg-white w-full">
+                    <div class=" px-4 py-2 bg-black flex justify-end">
+                        <a class="cursor-pointer font-semibold text-white" onclick="closePapua()">close</a>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+        <div class="relative ">
+            <div class="absolute top-0 w-full z-20 mt-6">
+                <div class=" max-w-7xl mx-auto items-center justify-center w-full flex mb-4">
+                    <img src="img/logo-putih-new.png" alt="Mapbiomas Indonesia" class="h-14">
+                </div>
+                <div class=" max-w-7xl mx-auto items-center justify-center w-full">
+                    <a class="flex items-center justify-center sm:text-4xl text-base  font-bold  text-white">Kunci Interpretasi Mapbiomas Indonesia</a>
+                </div>
+            </div>
+            <div class="flex">
+                <div id="map" class="h-screen w-full z-10 cursor-pointer"></div>
+            </div>
+        </div>
+
+        
+          
+
+
+
+
+
+
+
+
+
+    <script>
+        var map = L.map('map', {
+            center: [0.0893, 118.5213],
+            zoom: 5.4,
+            // attributionControl: false,
+            zoomControl: false
+          });
+
+        var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+            maxZoom: 20,
+            subdomains:['mt0','mt1','mt2','mt3'],
+            attribution: 'Mapbiomas Indonesia'
+            }).addTo(map);
+        function handleJson(data) {
+            selectedArea = L.geoJson(data).addTo(map);
+            map.fitBounds(selectedArea.getBounds());
+        }
+        
+        
+            L.tileLayer.betterWms('https://aws.simontini.id/geoserver/wfs', {
+                layers: 'simontini:Pulau_Indonesia',
+                transparent: true,
+                format: 'image/png'
+          }).addTo(map);
+
+          function closePapua() {
+            document.getElementById("papua").style.display = 'none'
+          }
+    </script>
+</body>
+</html>
